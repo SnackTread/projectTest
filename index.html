@@ -7,20 +7,34 @@
     <title>Document</title>
 </head>
 <body>
-    <button id="#btnGET">发起GET请求</button>
+    <button id="btnGET">发起GET请求</button>
+    <button id="btnPOST">发起POST请求</button>
     <script>
-        var xhr = new XMLHttpRequest();
-        
-        xhr.open('GET', 'http://www.liulongbin.top:3006/api/getbooks?id=1');
-
-        xhr.send();
-
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // responseText 是JSON数据格式
-                console.log(xhr.responseText);
+        var btnGET = document.querySelector('#btnGET');
+        btnGET.addEventListener('click', function() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://www.liulongbin.top:3006/api/getbooks');
+            xhr.send();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(JSON.parse(xhr.responseText));
+                }
             }
-        }
+        })
+
+        var btnPOST = document.querySelector('#btnPOST');
+        btnPOST.addEventListener('click', function() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://www.liulongbin.top:3006/api/addbook');
+            // 指定发送数据的格式
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send("bookname=金瓶梅&author=兰生笑笑&publisher=新加坡南洋出版社");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(JSON.parse(xhr.responseText));
+                }
+            }
+        })
     </script>
 </body>
 </html>
